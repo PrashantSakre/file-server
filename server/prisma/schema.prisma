@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String   @id @default(dbgenerated("gen_random_uuid()"))
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  name             String
+  password         String
+  isAdmin          Boolean?
+  File             File[]
+  profileImagePath String?
+}
+
+model File {
+  id          String   @id @default(dbgenerated("gen_random_uuid()"))
+  name        String
+  hash        String
+  preview_url String?
+  data        String?
+  path        String
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// model Meta {
+//   id          String @id @default(dbgenerated("gen_random_uuid()"))
+//   data        String
+//   file        File?  @relation(fields: [fileId], references: [id])
+//   fileId      String @unique
+//   preview_url String
+// }

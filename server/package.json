@@ -1,0 +1,46 @@
+{
+  "name": "file-server",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "bun test ./test/**.test.ts",
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build src/index.ts",
+    "start": "bun src/index.ts",
+    "biome:lint": "bunx @biomejs/biome lint ./src ",
+    "biome:format": "bunx @biomejs/biome format --write ./src",
+    "biome:check": "bunx @biomejs/biome check --apply ./src",
+    "prepare": "cd .. && husky install ./server/.husky",
+    "prisma:pull": "bunx prisma pull",
+    "prisma:push": "bunx prisma db push",
+    "prisma:generate": "bunx prisma generate",
+    "prisma:studio": "bunx prisma studio",
+    "prisma:format": "bunx prisma format",
+    "prisma:seed": "bunx prisma db seed"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.0.4",
+    "@elysiajs/static": "^1.0.3",
+    "@elysiajs/swagger": "^1.0.5",
+    "@prisma/client": "^5.16.2",
+    "elysia": "latest",
+    "jose": "^5.6.3",
+    "prisma": "^5.16.2"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "bun run biome:check"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@grotto/logysia": "^0.1.4",
+    "@openapitools/openapi-generator-cli": "^2.13.4",
+    "bun-types": "latest",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7"
+  },
+  "prisma": {
+    "seed": "bun prisma/seed.ts"
+  },
+  "module": "src/index.js"
+}

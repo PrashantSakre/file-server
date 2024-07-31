@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
 }
 
 datasource db {
@@ -11,7 +12,7 @@ model User {
   id               String   @id @default(dbgenerated("gen_random_uuid()"))
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-  name             String
+  name             String   @unique
   password         String
   isAdmin          Boolean?
   File             File[]
@@ -19,8 +20,9 @@ model User {
 }
 
 model File {
-  id          String   @id @default(dbgenerated("gen_random_uuid()"))
+  id          String   @id @unique @default(dbgenerated("gen_random_uuid()"))
   name        String
+  type        String
   hash        String
   preview_url String?
   data        String?

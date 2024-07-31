@@ -6,9 +6,14 @@ export const files = async () => {
 	return await prisma.file.findMany();
 };
 
-export const addFile = async (name: string, userId: string, path: string) => {
+export const addFile = async (
+	name: string,
+	userId: string,
+	path: string,
+	type: string,
+) => {
 	return await prisma.file.create({
-		data: { name, userId, path, hash: "hash" },
+		data: { name, type, userId, path, hash: "hash" },
 	});
 };
 

@@ -1,8 +1,8 @@
-export async function upload(fileName: string, file: any, path: string) {
-	const filePath = `${process.env.FILE_PATH}/files/${path}${fileName}`;
+export async function upload(file: any, path: string): Promise<any> {
+	const filePath = `${process.env.FILE_PATH}/files/${path}${file.name}`;
 	const res = await Bun.write(filePath, file, { createPath: true });
 	if (res) {
-		return await Bun.file(filePath);
+		return filePath;
 	}
 }
 
@@ -11,5 +11,5 @@ export async function getFile(
 	fileName: string | undefined,
 ) {
 	const filePath = `${process.env.FILE_PATH}/files/${path}${fileName}`;
-	return await Bun.file(filePath);
+	return Bun.file(filePath);
 }

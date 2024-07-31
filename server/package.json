@@ -9,7 +9,7 @@
     "biome:lint": "bunx @biomejs/biome lint ./src ",
     "biome:format": "bunx @biomejs/biome format --write ./src",
     "biome:check": "bunx @biomejs/biome check --apply ./src",
-    "prepare": "cd .. && husky install ./server/.husky",
+    "prepare": "cd .. && husky server/.husky",
     "prisma:pull": "bunx prisma pull",
     "prisma:push": "bunx prisma db push",
     "prisma:generate": "bunx prisma generate",
@@ -23,18 +23,18 @@
     "@elysiajs/static": "^1.0.3",
     "@elysiajs/swagger": "^1.0.5",
     "@prisma/client": "^5.16.2",
-    "elysia": "latest",
+    "elysia": "^1.1.4",
     "jose": "^5.6.3",
+    "logestic": "^1.2.1",
     "prisma": "^5.16.2"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "bun run biome:check"
+      "bun run biome:format"
     ]
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@grotto/logysia": "^0.1.4",
     "@openapitools/openapi-generator-cli": "^2.13.4",
     "bun-types": "latest",
     "husky": "^9.0.11",

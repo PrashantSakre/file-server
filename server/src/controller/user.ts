@@ -7,9 +7,18 @@ import { generateHash } from "../utils/bycrpt";
 export const usersController = new Elysia({ prefix: "/users" })
 	.use(userModel)
 	.use(authPlugin)
-	.get("", async () => {
-		return await users();
-	})
+	.get(
+		"",
+		async () => {
+			return await users();
+		},
+		{
+			detail: {
+				summary: "Get All users",
+				tags: ["User"],
+			},
+		},
+	)
 	.post(
 		"/add",
 		async ({ user, body: { name, password } }) => {
@@ -21,6 +30,10 @@ export const usersController = new Elysia({ prefix: "/users" })
 		},
 		{
 			body: "user.auth",
+			detail: {
+				summary: "Add User",
+				tags: ["User"],
+			},
 		},
 	)
 	.get(
@@ -30,5 +43,9 @@ export const usersController = new Elysia({ prefix: "/users" })
 		},
 		{
 			params: "user.id",
+			detail: {
+				summary: "Get user details",
+				tags: ["User"],
+			},
 		},
 	);

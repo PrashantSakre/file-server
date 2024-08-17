@@ -15,5 +15,7 @@ jobs:
           version: latest
       - name: Run Biome
         run: biome ci .
+        working-directory: ./server
       - name: Run Biome Check
-        run: npx @biomejs/biome check ./server
+        run: biome check .
+        working-directory: ./server

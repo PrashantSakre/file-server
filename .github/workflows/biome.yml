@@ -14,11 +14,11 @@ jobs:
       #   with:
       #     version: latest
       - name: Setup Biome
-        run: curl -fsSL https://bun.sh/install | bash && bun i
+        run: curl -fsSL https://bun.sh/install | bash
         working-directory: ./server
       - name: Run Biome
+        run: bun i
+        working-directory: ./server
+      - name: Run Biome Check
         run: bun run biome:lint
         working-directory: ./server
-      # - name: Run Biome Check
-      #   run: biome check .
-      #   working-directory: ./server

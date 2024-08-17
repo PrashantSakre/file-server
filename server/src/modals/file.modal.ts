@@ -11,7 +11,7 @@ export const fileModel = new Elysia().model({
 	"file.path": t.Object({
 		path: t.Optional(
 			t.String({
-				pattern: "^/.*[^/]$",
+				pattern: "^/.*[^/]?$",
 				error: "Expected path should start with '/', e.g '/files'",
 			}),
 		),

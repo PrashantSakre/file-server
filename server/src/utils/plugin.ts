@@ -9,7 +9,7 @@ const authPlugin = (app: Elysia) =>
 		.use(
 			jwt({
 				name: "jwt",
-				secret: Bun.env.JWT_SECRET!,
+				secret: Bun.env.JWT_SECRET || "secret",
 			}),
 		)
 		.derive({ as: "scoped" }, async ({ jwt, cookie: { accessToken }, set }) => {

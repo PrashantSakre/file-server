@@ -2,9 +2,18 @@ import { Elysia, t } from "elysia";
 
 export const fileModel = new Elysia().model({
 	"file.add": t.Object({
-		// title: t.String(),
-		file: t.File(),
-		path: t.String(),
-		// userId: t.String(),
+		file: t.File({ error: "Expected file" }),
+		path: t.String({
+			pattern: "/$",
+			error: "Expected path to end with '/' to make it folder, e.g 'files/'",
+		}),
+	}),
+	"file.path": t.Object({
+		path: t.Optional(
+			t.String({
+				pattern: "^/.*[^/]$",
+				error: "Expected path should start with '/', e.g '/files'",
+			}),
+		),
 	}),
 });

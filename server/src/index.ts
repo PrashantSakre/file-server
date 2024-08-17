@@ -4,6 +4,7 @@ import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { Logestic } from "logestic";
 import { authController, fileController, usersController } from "./controller";
+import { directoryController } from "./controller/directory";
 import { authPlugin } from "./utils/plugin";
 
 export const app = new Elysia();
@@ -26,7 +27,11 @@ app
 	.get("/", () => "Hello Elysia")
 	.use(authController)
 	.group("/api", (app) =>
-		app.use(authPlugin).use(usersController).use(fileController),
+		app
+			.use(authPlugin)
+			.use(usersController)
+			.use(fileController)
+			.use(directoryController),
 	)
 	.listen(Bun.env.PORT || 3000, () =>
 		console.log(

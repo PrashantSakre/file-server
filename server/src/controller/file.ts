@@ -1,5 +1,6 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { addFile, files, getFileById } from "../Queries";
+import { directoryFiles } from "../Queries/File";
 import { fileModel } from "../modals";
 import { getFile, upload } from "../utils/file";
 import { authPlugin } from "../utils/plugin";
@@ -9,12 +10,13 @@ export const fileController = new Elysia({ prefix: "/files" })
 	.use(authPlugin)
 	.get(
 		"",
-		async () => {
-			return await files();
+		async ({ query: { path } }) => {
+			return path ? await directoryFiles(path) : await files();
 		},
 		{
+			query: "file.path",
 			detail: {
-				summary: "Get all files",
+				summary: "Get files data",
 				tags: ["File"],
 			},
 		},
@@ -23,7 +25,15 @@ export const fileController = new Elysia({ prefix: "/files" })
 		"",
 		async ({ user, body: { file, path } }) => {
 			await upload(file, path).then(async (save_path: string) => {
-				return await addFile(file.name, user.id, save_path, file.type);
+				const dirSavePath: Array<string> = save_path.split("/");
+				dirSavePath.pop();
+				return await addFile(
+					file.name,
+					user.id,
+					save_path,
+					file.type,
+					dirSavePath.join("/"),
+				);
 			});
 		},
 		{
@@ -38,11 +48,11 @@ export const fileController = new Elysia({ prefix: "/files" })
 		"/:id",
 		async ({ params: { id } }) => {
 			const file = await getFileById(id);
-			return await getFile(file?.path, file?.name);
+			return file && (await getFile(file.path));
 		},
 		{
 			detail: {
-				summary: "Get file",
+				summary: "Get file by id",
 				tags: ["File"],
 			},
 		},

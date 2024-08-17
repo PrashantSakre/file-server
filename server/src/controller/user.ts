@@ -1,8 +1,8 @@
 import { Elysia } from "elysia";
 import { addUser, getUserById, users } from "../Queries";
 import { userModel } from "../modals";
-import { authPlugin } from "../utils/plugin";
 import { generateHash } from "../utils/bycrpt";
+import { authPlugin } from "../utils/plugin";
 
 export const usersController = new Elysia({ prefix: "/users" })
 	.use(userModel)

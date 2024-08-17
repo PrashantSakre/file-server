@@ -27,6 +27,7 @@ model File {
   preview_url String?
   data        String?
   path        String
+  directory   String
   user        User?    @relation(fields: [userId], references: [id])
   userId      String
   createdAt   DateTime @default(now())

@@ -8,7 +8,7 @@
     "start": "bun src/index.ts",
     "biome:lint": "bunx @biomejs/biome lint ./src ",
     "biome:format": "bunx @biomejs/biome format --write ./src",
-    "biome:check": "bunx @biomejs/biome check --apply ./src",
+    "biome:check": "bunx @biomejs/biome check --write ./src",
     "prepare": "cd .. && husky server/.husky",
     "prisma:pull": "bunx prisma pull",
     "prisma:push": "bunx prisma db push",
@@ -30,6 +30,7 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
+      "bun run biome:lint",
       "bun run biome:format"
     ]
   },

@@ -20,9 +20,10 @@ export const addFile = async (
 	path: string,
 	type: string,
 	directory: string,
+	hash: string,
 ) => {
 	return await prisma.file.create({
-		data: { name, type, userId, path, hash: "hash", directory },
+		data: { name, type, userId, path, hash, directory },
 	});
 };
 

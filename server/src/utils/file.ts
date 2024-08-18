@@ -1,14 +1,31 @@
+import { Glob } from "bun";
+import crypto from "node:crypto";
+import fs from "node:fs";
 import { stat } from "node:fs/promises";
 import path from "node:path";
-import { Glob } from "bun";
 import { getFilesPath } from "../Queries/File";
 
-export async function upload(file: File, path: string) {
-	const filePath = `${process.env.FILE_PATH}/files${path}${file.name}`;
-	const res = await Bun.write(filePath, file, { createPath: true });
-	if (res) {
-		return filePath;
-	}
+export async function hashFile(
+	filePath: string,
+	algorithm = "sha256",
+): Promise<string> {
+	return new Promise((resolve, reject) => {
+		const hash = crypto.createHash(algorithm);
+		const fileStream = fs.createReadStream(filePath);
+
+		fileStream.on("data", (chunk) => hash.update(chunk));
+		fileStream.on("end", () => resolve(hash.digest("hex")));
+		fileStream.on("error", (err) => reject(err));
+	});
+}
+
+export async function upload(file: File, path: string): Promise<string> {
+	return new Promise((resolve, reject) => {
+		const filePath = `${process.env.FILE_PATH}/files${path}${file.name}`;
+		Bun.write(filePath, file, { createPath: true })
+			.then(() => resolve(filePath))
+			.catch((err) => reject(err));
+	});
 }
 
 export async function getFile(path: string) {

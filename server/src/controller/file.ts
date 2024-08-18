@@ -2,7 +2,7 @@ import { Elysia } from "elysia";
 import { addFile, files, getFileById } from "../Queries";
 import { directoryFiles } from "../Queries/File";
 import { fileModel } from "../modals";
-import { getFile, upload } from "../utils/file";
+import { getFile, hashFile, upload } from "../utils/file";
 import { authPlugin } from "../utils/plugin";
 
 export const fileController = new Elysia({ prefix: "/files" })
@@ -27,12 +27,14 @@ export const fileController = new Elysia({ prefix: "/files" })
 			await upload(file, path).then(async (save_path: string) => {
 				const dirSavePath: Array<string> = save_path.split("/");
 				dirSavePath.pop();
+				const hash: string = await hashFile(save_path);
 				return await addFile(
 					file.name,
 					user.id,
 					save_path,
 					file.type,
 					dirSavePath.join("/"),
+					hash,
 				);
 			});
 		},

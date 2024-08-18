@@ -4,7 +4,7 @@ export const fileModel = new Elysia().model({
 	"file.add": t.Object({
 		file: t.File({ error: "Expected file" }),
 		path: t.String({
-			pattern: "/$",
+			pattern: "^/(?:[^/]+/)*[^/]*$",
 			error: "Expected path to end with '/' to make it folder, e.g 'files/'",
 		}),
 	}),

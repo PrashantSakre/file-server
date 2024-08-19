@@ -1,8 +1,8 @@
-import { Glob } from "bun";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import { stat } from "node:fs/promises";
 import path from "node:path";
+import { Glob } from "bun";
 import { getFilesPath } from "../Queries/File";
 
 export async function hashFile(

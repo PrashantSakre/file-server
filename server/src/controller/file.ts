@@ -1,3 +1,4 @@
+import type { File } from "@prisma/client";
 import { Elysia } from "elysia";
 import { addFile, files, getFileById } from "../Queries";
 import { directoryFiles, searchHash } from "../Queries/File";
@@ -23,11 +24,17 @@ export const fileController = new Elysia({ prefix: "/files" })
 	)
 	.post(
 		"",
-		async ({ user, body: { file, path } }) => {
-			await upload(file, path).then(async (save_path: string) => {
+		async ({ user, body: { file, path }, set }) => {
+			return await upload(file, path).then(async (save_path: string) => {
 				const dirSavePath: Array<string> = save_path.split("/");
 				dirSavePath.pop();
 				const hash: string = await hashFile(save_path);
+				const hashSerch: File | null = await searchHash(hash);
+				if (hashSerch) {
+					set.status = 409;
+					return { message: "File already exists" };
+				}
+				set.status = 201;
 				return await addFile(
 					file.name,
 					user.id,

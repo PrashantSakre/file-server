@@ -30,3 +30,7 @@ export const addFile = async (
 export const getFileById = async (id: string) => {
 	return await prisma.file.findUnique({ where: { id } });
 };
+
+export const searchHash = async (hash: string) => {
+	return await prisma.file.findFirst({ where: { hash } });
+};

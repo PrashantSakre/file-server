@@ -16,4 +16,7 @@ export const fileModel = new Elysia().model({
 			}),
 		),
 	}),
+	"file.search": t.Object({
+		hash: t.String({ error: "Expected hash query param." }),
+	}),
 });

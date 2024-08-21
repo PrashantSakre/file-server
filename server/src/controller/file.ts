@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { addFile, files, getFileById } from "../Queries";
-import { directoryFiles } from "../Queries/File";
+import { directoryFiles, searchHash } from "../Queries/File";
 import { fileModel } from "../modals";
 import { getFile, hashFile, upload } from "../utils/file";
 import { authPlugin } from "../utils/plugin";
@@ -53,6 +53,19 @@ export const fileController = new Elysia({ prefix: "/files" })
 			return file && (await getFile(file.path));
 		},
 		{
+			detail: {
+				summary: "Get file by id",
+				tags: ["File"],
+			},
+		},
+	)
+	.get(
+		"/search",
+		async ({ query: { hash } }) => {
+			return await searchHash(hash);
+		},
+		{
+			query: "file.search",
 			detail: {
 				summary: "Get file by id",
 				tags: ["File"],

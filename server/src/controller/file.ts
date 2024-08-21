@@ -1,10 +1,10 @@
+import type { File } from "@prisma/client";
 import { Elysia } from "elysia";
 import { addFile, files, getFileById } from "../Queries";
 import { directoryFiles, searchHash } from "../Queries/File";
 import { fileModel } from "../modals";
 import { getFile, hashFile, upload } from "../utils/file";
 import { authPlugin } from "../utils/plugin";
-import type { File } from "@prisma/client";
 
 export const fileController = new Elysia({ prefix: "/files" })
 	.use(fileModel)

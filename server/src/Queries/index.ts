@@ -1,12 +1,5 @@
 import { addFile, files, getFileById } from "./File";
-import {
-	addAdmin,
-	addUser,
-	getAdminUsers,
-	getUserById,
-	getUserByName,
-	users,
-} from "./User";
+import { addAdmin, addUser, getAdminUsers, getUserById, getUserByName, users } from "./User";
 
 export {
 	users,

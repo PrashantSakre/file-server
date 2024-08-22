@@ -5,10 +5,7 @@ import path from "node:path";
 import { Glob } from "bun";
 import { getFilesPath } from "../Queries/File";
 
-export async function hashFile(
-	filePath: string,
-	algorithm = "sha256",
-): Promise<string> {
+export async function hashFile(filePath: string, algorithm = "sha256"): Promise<string> {
 	return new Promise((resolve, reject) => {
 		const hash = crypto.createHash(algorithm);
 		const fileStream = fs.createReadStream(filePath);

@@ -15,7 +15,8 @@
 		"prisma:generate": "bunx prisma generate",
 		"prisma:studio": "bunx prisma studio",
 		"prisma:format": "bunx prisma format",
-		"prisma:seed": "bunx prisma db seed"
+		"prisma:seed": "bunx prisma db seed",
+		"api:generate": "bash bin/generate-open-api.sh web"
 	},
 	"dependencies": {
 		"@elysiajs/cors": "^1.0.4",
@@ -29,7 +30,8 @@
 		"prisma": "^5.16.2"
 	},
 	"lint-staged": {
-		"**/*.{js,jsx,ts,tsx}": ["bun run biome:lint", "bun run biome:format"]
+		"**/*.{js,jsx,ts,tsx}": ["bun run biome:lint", "bun run biome:format"],
+		"**/*.json": ["bun run biome:format"]
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",

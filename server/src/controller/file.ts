@@ -35,14 +35,7 @@ export const fileController = new Elysia({ prefix: "/files" })
 					return { message: "File already exists" };
 				}
 				set.status = 201;
-				return await addFile(
-					file.name,
-					user.id,
-					save_path,
-					file.type,
-					dirSavePath.join("/"),
-					hash,
-				);
+				return await addFile(file.name, user.id, save_path, file.type, dirSavePath.join("/"), hash);
 			});
 		},
 		{

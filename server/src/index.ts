@@ -27,14 +27,8 @@ app
 	.get("/", () => "Hello Elysia")
 	.use(authController)
 	.group("/api", (app) =>
-		app
-			.use(authPlugin)
-			.use(usersController)
-			.use(fileController)
-			.use(directoryController),
+		app.use(authPlugin).use(usersController).use(fileController).use(directoryController),
 	)
 	.listen(Bun.env.PORT || 3000, () =>
-		console.log(
-			`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
-		),
+		console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`),
 	);

@@ -30,8 +30,11 @@
 		"prisma": "^5.16.2"
 	},
 	"lint-staged": {
-		"**/*.{js,jsx,ts,tsx}": ["bun run biome:lint", "bun run biome:format"],
-		"**/*.json": ["bun run biome:format"]
+		"**/*.{js,jsx,ts,tsx}": [
+			"bunx @biomejs/biome lint .",
+			"bunx @biomejs/biome format --write ."
+		],
+		"**/*.json": ["bunx @biomejs/biome format --write ."]
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",

@@ -40,7 +40,6 @@ export const authController = new Elysia({ prefix: "/auth" })
 	.post(
 		"/signin",
 		async ({ JWT, cookie: { accessToken }, body: { name, password } }) => {
-			console.log(name, "test");
 			const user = await getUserByName(name);
 			if (!user) {
 				return new Error("User doesn't exists.");

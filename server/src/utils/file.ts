@@ -16,9 +16,9 @@ export async function hashFile(filePath: string, algorithm = "sha256"): Promise<
 	});
 }
 
-export async function upload(file: File, path: string): Promise<string> {
+export async function upload(file: File, path: string, user: string): Promise<string> {
 	return new Promise((resolve, reject) => {
-		const filePath = `${process.env.FILE_PATH}/files${path}${file.name}`;
+		const filePath = `${process.env.FILE_PATH}/files/${user}${path}${file.name}`;
 		Bun.write(filePath, file, { createPath: true })
 			.then(() => resolve(filePath))
 			.catch((err) => reject(err));

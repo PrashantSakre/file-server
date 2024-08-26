@@ -28,7 +28,7 @@ export const fileController = new Elysia({ prefix: "/files" })
 			return await upload(file, path, user.name).then(async (save_path: string) => {
 				const dirSavePath: Array<string> = save_path.split("/");
 				dirSavePath.pop();
-				const hash: string = await hashFile(save_path);
+				const hash: string = await hashFile(save_path, user.name);
 				const hashSerch: File | null = await searchHash(hash);
 				if (hashSerch) {
 					set.status = 409;

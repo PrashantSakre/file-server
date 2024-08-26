@@ -5,17 +5,29 @@ import path from "node:path";
 import { Glob } from "bun";
 import { getFilesPath } from "../Queries/File";
 
-export async function hashFile(filePath: string, algorithm = "sha256"): Promise<string> {
+/**
+ * Generates a hash of a file's content combined with a user-provided string.
+ * The hash algorithm defaults to 'sha256' but can be specified by the caller.
+ */
+export async function hashFile(
+	filePath: string,
+	user: string,
+	algorithm = "sha256",
+): Promise<string> {
 	return new Promise((resolve, reject) => {
 		const hash = crypto.createHash(algorithm);
 		const fileStream = fs.createReadStream(filePath);
-
+		hash.update(user);
 		fileStream.on("data", (chunk) => hash.update(chunk));
 		fileStream.on("end", () => resolve(hash.digest("hex")));
 		fileStream.on("error", (err) => reject(err));
 	});
 }
 
+/**
+ * Uploads a file to a specified path, combining the file name with the user's identifier.
+ * The file is saved to a directory structure that includes the user's name and the specified path.
+ */
 export async function upload(file: File, path: string, user: string): Promise<string> {
 	return new Promise((resolve, reject) => {
 		const filePath = `${process.env.FILE_PATH}/files/${user}${path}${file.name}`;
@@ -31,8 +43,6 @@ export async function getFile(path: string) {
 
 /**
  * Scans the given folder path for directories only.
- * @param path - The path of the folder to scan.
- * @returns An array of directory paths, with backslashes replaced by forward slashes.
  */
 export async function scanFolder(path1: string): Promise<string[]> {
 	const glob = new Glob("*");
@@ -61,6 +71,9 @@ export async function scanFolder(path1: string): Promise<string[]> {
 	return directories;
 }
 
+/**
+ * Retrieves the items (files and directories) from a specified folder path.
+ */
 export async function getFolderItems(path: string) {
 	return await getFilesPath(path);
 }

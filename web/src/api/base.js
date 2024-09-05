@@ -1,25 +1,3 @@
-/* eslint-disable func-names */
-import axios from "axios";
+import * as Api from "@file/sdk";
 
-// configure an axios instance
-const instance = axios.create({
-	// eslint-disable-next-line no-use-before-define
-	baseURL: process.env.REACT_APP_API || "http://localhost:3001", // eslint-disable-line no-use-before-define
-	headers: {
-		"Content-Type": "application/json",
-	},
-});
-
-instance.interceptors.response.use(
-	(response) => response,
-	// eslint-disable-next-line func-names
-	(error) => {
-		if (error?.response?.status === 401) {
-			localStorage.clear();
-			window.location.reload();
-		}
-		return Promise.reject(error);
-	},
-);
-
-export default instance;
+export const configuration = new Api.createConfiguration({ basePath: process.env.REACT_APP_SERVER_URL || "localhost:3001" });

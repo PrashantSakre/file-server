@@ -1,0 +1,228 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "File server",
+		"description": "Self hosted file server.",
+		"version": "0.0.1"
+	},
+	"paths": {
+		"/": { "get": { "operationId": "getIndex", "responses": { "200": {} } } },
+		"/auth/signupadmin": {
+			"post": {
+				"parameters": [],
+				"operationId": "postAuthSignupadmin",
+				"summary": "Sign up add first Admin",
+				"tags": ["Auth"],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/user.auth" }
+						},
+						"multipart/form-data": {
+							"schema": { "$ref": "#/components/schemas/user.auth" }
+						},
+						"text/plain": {
+							"schema": { "$ref": "#/components/schemas/user.auth" }
+						}
+					}
+				},
+				"responses": { "200": {} }
+			}
+		},
+		"/auth/signin": {
+			"post": {
+				"parameters": [],
+				"operationId": "postAuthSignin",
+				"summary": "Sign In",
+				"tags": ["Auth"],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/user.auth" }
+						},
+						"multipart/form-data": {
+							"schema": { "$ref": "#/components/schemas/user.auth" }
+						},
+						"text/plain": {
+							"schema": { "$ref": "#/components/schemas/user.auth" }
+						}
+					}
+				},
+				"responses": { "200": {} }
+			}
+		},
+		"/api/users": {
+			"get": {
+				"operationId": "getApiUsers",
+				"summary": "Get All users",
+				"tags": ["User"],
+				"responses": { "200": {} }
+			}
+		},
+		"/api/users/add": {
+			"post": {
+				"parameters": [],
+				"operationId": "postApiUsersAdd",
+				"summary": "Add User",
+				"tags": ["User"],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/user.auth" }
+						},
+						"multipart/form-data": {
+							"schema": { "$ref": "#/components/schemas/user.auth" }
+						},
+						"text/plain": {
+							"schema": { "$ref": "#/components/schemas/user.auth" }
+						}
+					}
+				},
+				"responses": { "200": {} }
+			}
+		},
+		"/api/users/{id}": {
+			"get": {
+				"parameters": [
+					{
+						"schema": { "type": "string", "error": "user id must be string." },
+						"in": "path",
+						"name": "id",
+						"required": true
+					}
+				],
+				"operationId": "getApiUsersById",
+				"summary": "Get user details",
+				"tags": ["User"],
+				"responses": { "200": {} }
+			}
+		},
+		"/api/files": {
+			"get": {
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"pattern": "^/.*[^/]?$",
+							"error": "Expected path should start with '/', e.g '/files'"
+						},
+						"in": "query",
+						"name": "path",
+						"required": false
+					}
+				],
+				"operationId": "getApiFiles",
+				"summary": "Get files data",
+				"tags": ["File"],
+				"responses": { "200": {} }
+			},
+			"post": {
+				"parameters": [],
+				"operationId": "postApiFiles",
+				"summary": "Add file",
+				"tags": ["File"],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": { "$ref": "#/components/schemas/file.add" }
+						},
+						"multipart/form-data": {
+							"schema": { "$ref": "#/components/schemas/file.add" }
+						},
+						"text/plain": {
+							"schema": { "$ref": "#/components/schemas/file.add" }
+						}
+					}
+				},
+				"responses": { "200": {} }
+			}
+		},
+		"/api/files/{id}": {
+			"get": {
+				"operationId": "getApiFilesById",
+				"summary": "Get file by id",
+				"tags": ["File"],
+				"parameters": [
+					{
+						"schema": { "type": "string" },
+						"in": "path",
+						"name": "id",
+						"required": true
+					}
+				],
+				"responses": { "200": {} }
+			}
+		},
+		"/api/directory/scan": {
+			"get": {
+				"parameters": [
+					{
+						"schema": {
+							"type": "string",
+							"pattern": "^/.*[^/]?$",
+							"error": "Expected path should start with '/', e.g '/files'"
+						},
+						"in": "query",
+						"name": "path",
+						"required": false
+					}
+				],
+				"operationId": "getApiDirectoryScan",
+				"summary": "Get directory scan",
+				"tags": ["Directory"],
+				"responses": { "200": {} }
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"user.auth": {
+				"type": "object",
+				"properties": {
+					"name": { "error": "name must be string.", "type": "string" },
+					"password": { "error": "password must be string.", "type": "string" }
+				},
+				"required": ["name", "password"]
+			},
+			"user.id": {
+				"type": "object",
+				"properties": {
+					"id": { "error": "user id must be string.", "type": "string" }
+				},
+				"required": ["id"]
+			},
+			"file.add": {
+				"type": "object",
+				"properties": {
+					"file": {
+						"default": "File",
+						"error": "Expected file",
+						"type": "string",
+						"format": "binary"
+					},
+					"path": {
+						"pattern": "^/(?:[^/]+/)*[^/]*$",
+						"error": "Expected path to end with '/' to make it folder, e.g 'files/'",
+						"type": "string"
+					}
+				},
+				"required": ["file", "path"]
+			},
+			"file.path": {
+				"type": "object",
+				"properties": {
+					"path": {
+						"pattern": "^/.*[^/]?$",
+						"error": "Expected path should start with '/', e.g '/files'",
+						"type": "string"
+					}
+				}
+			}
+		}
+	},
+	"servers": [{"url": "http://localhost:3001"}]
+}

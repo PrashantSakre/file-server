@@ -5,6 +5,7 @@
 	"dependencies": {
 		"@ant-design/colors": "^7.0.2",
 		"@ant-design/icons": "^5.3.7",
+		"@file-server/sdk": "../open-api/typescript",
 		"@fontsource/poppins": "^5.0.14",
 		"@reduxjs/toolkit": "^2.2.5",
 		"@testing-library/jest-dom": "^6.4.6",

@@ -11,7 +11,11 @@ export const app = new Elysia();
 
 app
 	.use(Logestic.preset("fancy"))
-	.use(cors())
+	.use(
+		cors({
+			allowedHeaders: "*",
+		}),
+	)
 	.use(staticPlugin({ prefix: "/public" }))
 	.use(
 		swagger({
